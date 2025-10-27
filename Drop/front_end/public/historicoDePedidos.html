@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Pedidos - DropPoint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/historicodePedidos.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <button onclick="window.location.href='dashboardUsuario.html'" class="btn-back" aria-label="Voltar ao dashboard">
+                ←
+            </button>
+            <div class="header-title">
+                <h1>Histórico de Pedidos</h1>
+                <p>Consulte todas as suas entregas</p>
+            </div>
+            <div class="header-actions">
+                <button class="export-btn" onclick="exportHistory()">📊</button>
+                <button class="refresh-btn" onclick="refreshHistory()">🔄</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Filtros Avançados -->
+            <div class="filters-section">
+                <div class="filter-row">
+                    <div class="date-filters">
+                        <input type="date" id="startDate" class="date-input">
+                        <span class="date-separator">até</span>
+                        <input type="date" id="endDate" class="date-input">
+                    </div>
+                    <div class="quick-filters">
+                        <button class="quick-filter active" onclick="setQuickFilter('all')">Todos</button>
+                        <button class="quick-filter" onclick="setQuickFilter('week')">7 dias</button>
+                        <button class="quick-filter" onclick="setQuickFilter('month')">30 dias</button>
+                        <button class="quick-filter" onclick="setQuickFilter('year')">1 ano</button>
+                    </div>
+                </div>
+                
+                <div class="filter-row">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Buscar por código, endereço ou motoboy..." class="search-input">
+                        <button onclick="searchHistory()" class="search-btn">🔍</button>
+                    </div>
+                    
+                    <div class="status-filters">
+                        <select id="statusFilter" class="status-select">
+                            <option value="all">Todos os Status</option>
+                            <option value="completed">Concluídos</option>
+                            <option value="cancelled">Cancelados</option>
+                            <option value="in-progress">Em Andamento</option>
+                        </select>
+                        
+                        <select id="sortBy" class="sort-select">
+                            <option value="date_desc">Mais Recentes</option>
+                            <option value="date_asc">Mais Antigos</option>
+                            <option value="value_desc">Maior Valor</option>
+                            <option value="value_asc">Menor Valor</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo Estatístico -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalOrders">0</span>
+                        <span class="stat-label">Total de Pedidos</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalSpent">R$ 0,00</span>
+                        <span class="stat-label">Total Gasto</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="avgRating">0.0</span>
+                        <span class="stat-label">Avaliação Média</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="avgTime">0 min</span>
+                        <span class="stat-label">Tempo Médio</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Pedidos -->
+            <div class="orders-section">
+                <div class="section-header">
+                    <h2>Seus Pedidos <span id="ordersCount">(0)</span></h2>
+                    <div class="view-options">
+                        <button class="view-btn active" onclick="changeView('list')" data-view="list">📋</button>
+                        <button class="view-btn" onclick="changeView('grid')" data-view="grid">⊞</button>
+                    </div>
+                </div>
+
+                <div class="orders-container" id="ordersContainer">
+                    <!-- Os pedidos serão carregados aqui via JavaScript -->
+                </div>
+
+                <!-- Paginação -->
+                <div class="pagination" id="pagination">
+                    <!-- Botões de paginação serão gerados via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Estado vazio -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📋</div>
+                <h3>Nenhum pedido encontrado</h3>
+                <p>Não encontramos pedidos com os filtros selecionados.</p>
+                <button class="clear-filters-btn" onclick="clearAllFilters()">Limpar Filtros</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Detalhes do Pedido -->
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="modalOrderTitle">Detalhes do Pedido</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalOrderBody">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Fechar</button>
+                <button class="btn-primary" onclick="reorderItem()" id="reorderBtn">Repetir Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Avaliação -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Avaliar Entrega</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rating-section">
+                    <h3>Como foi sua experiência?</h3>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">⭐</span>
+                        <span class="star" data-rating="2">⭐</span>
+                        <span class="star" data-rating="3">⭐</span>
+                        <span class="star" data-rating="4">⭐</span>
+                        <span class="star" data-rating="5">⭐</span>
+                    </div>
+                    <textarea id="reviewComment" placeholder="Deixe um comentário sobre a entrega (opcional)" class="review-textarea"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn-primary" onclick="submitRating()">Enviar Avaliação</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/historicoDePedidos.js"></script>
+</body>
+</html>

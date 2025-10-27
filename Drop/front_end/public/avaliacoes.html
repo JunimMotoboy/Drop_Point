@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliações - DropPoint</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/avaliacoes.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <button class="btn-back" onclick="goBack()">
+                ←
+            </button>
+            <div class="header-title">
+                <h1>Avaliações</h1>
+                <p>Compartilhe sua experiência</p>
+            </div>
+            <div class="header-stats">
+                <span class="rating-badge" id="userRating">⭐ 4.8</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Seção de Avaliação Pendente -->
+            <div class="pending-evaluations" id="pendingEvaluations">
+                <h2>Aguardando Sua Avaliação</h2>
+                <div class="evaluation-cards" id="pendingCards">
+                    <!-- Cards serão carregados via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Filtros e Busca -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <h2>Suas Avaliações</h2>
+                    <div class="filter-controls">
+                        <select id="filterType" class="filter-select">
+                            <option value="all">Todas</option>
+                            <option value="delivery">Entrega</option>
+                            <option value="motoboy">Motoboy</option>
+                            <option value="app">Aplicativo</option>
+                        </select>
+                        <select id="filterRating" class="filter-select">
+                            <option value="all">Todas as notas</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="1">⭐</option>
+                        </select>
+                        <button class="new-review-btn" onclick="openGeneralReviewModal()">
+                            + Nova Avaliação
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Avaliações -->
+            <div class="evaluations-list" id="evaluationsList">
+                <!-- Avaliações serão carregadas via JavaScript -->
+            </div>
+
+            <!-- Estatísticas de Avaliação -->
+            <div class="evaluation-stats">
+                <h2>Suas Estatísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value" id="totalEvaluations">0</div>
+                        <div class="stat-label">Total de Avaliações</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-value" id="averageRating">0.0</div>
+                        <div class="stat-label">Nota Média Dada</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-value" id="helpfulReviews">0</div>
+                        <div class="stat-label">Avaliações Úteis</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-value" id="improvementImpact">0</div>
+                        <div class="stat-label">Melhorias Implementadas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insights e Recomendações -->
+            <div class="insights-section">
+                <h2>Insights Baseados em Suas Avaliações</h2>
+                <div class="insights-grid" id="insightsGrid">
+                    <!-- Insights serão carregados via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Avaliação -->
+    <div id="evaluationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Avaliar Entrega</h2>
+                <button class="modal-close" onclick="closeEvaluationModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="evaluationForm">
+                    <!-- Informações do Pedido/Serviço -->
+                    <div class="evaluation-item-info" id="evaluationItemInfo">
+                        <!-- Será preenchido dinamicamente -->
+                    </div>
+
+                    <!-- Avaliação Geral -->
+                    <div class="rating-section">
+                        <label>Avaliação Geral</label>
+                        <div class="star-rating" data-rating="overall">
+                            <span class="star" data-value="1">⭐</span>
+                            <span class="star" data-value="2">⭐</span>
+                            <span class="star" data-value="3">⭐</span>
+                            <span class="star" data-value="4">⭐</span>
+                            <span class="star" data-value="5">⭐</span>
+                        </div>
+                        <span class="rating-text" id="overallRatingText">Clique nas estrelas para avaliar</span>
+                    </div>
+
+                    <!-- Aspectos Específicos -->
+                    <div class="aspects-rating" id="aspectsRating">
+                        <!-- Será preenchido baseado no tipo de avaliação -->
+                    </div>
+
+                    <!-- Comentários -->
+                    <div class="form-group">
+                        <label for="evaluationComment">Comentários (opcional)</label>
+                        <textarea 
+                            id="evaluationComment" 
+                            name="comment" 
+                            placeholder="Compartilhe detalhes sobre sua experiência..."
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <!-- Tags de Feedback -->
+                    <div class="feedback-tags">
+                        <label>O que mais se destacou? (opcional)</label>
+                        <div class="tags-container" id="feedbackTags">
+                            <!-- Tags serão carregadas baseadas no tipo -->
+                        </div>
+                    </div>
+
+                    <!-- Sugestões de Melhoria -->
+                    <div class="form-group">
+                        <label for="suggestions">Sugestões de Melhoria (opcional)</label>
+                        <textarea 
+                            id="suggestions" 
+                            name="suggestions" 
+                            placeholder="Como podemos melhorar nosso serviço?"
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <!-- Recomendação -->
+                    <div class="recommendation-section">
+                        <label>Você recomendaria nosso serviço?</label>
+                        <div class="recommendation-options">
+                            <label class="recommendation-option">
+                                <input type="radio" name="recommend" value="yes">
+                                <span class="option-text">👍 Sim, recomendaria</span>
+                            </label>
+                            <label class="recommendation-option">
+                                <input type="radio" name="recommend" value="maybe">
+                                <span class="option-text">🤔 Talvez</span>
+                            </label>
+                            <label class="recommendation-option">
+                                <input type="radio" name="recommend" value="no">
+                                <span class="option-text">👎 Não recomendaria</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeEvaluationModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="submitEvaluation()">Enviar Avaliação</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes da Avaliação -->
+    <div id="evaluationDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalhes da Avaliação</h2>
+                <button class="modal-close" onclick="closeDetailsModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="evaluationDetailsContent">
+                <!-- Conteúdo será carregado dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDetailsModal()">Fechar</button>
+                <button type="button" class="btn-primary" onclick="editEvaluation()">Editar Avaliação</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/avaliacoes.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - DropPoint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/perfil.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <button onclick="window.location.href='dashboardUsuario.html'" class="btn-back" aria-label="Voltar ao dashboard">
+                ←
+            </button>
+            <div class="header-title">
+                <h1>Meu Perfil</h1>
+                <p>Gerencie suas informações e preferências</p>
+            </div>
+            <button class="save-all-btn" onclick="saveAllChanges()" id="saveAllBtn" style="display: none;">
+                💾 Salvar
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Perfil do Usuário -->
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="avatar-section">
+                        <div class="avatar-container">
+                            <img src="../img/user-avatar.png" alt="Avatar" id="userAvatar" class="user-avatar">
+                            <div class="avatar-placeholder" id="avatarPlaceholder">👤</div>
+                            <button class="change-avatar-btn" onclick="changeAvatar()">📷</button>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                    </div>
+                    
+                    <div class="profile-info">
+                        <div class="editable-field">
+                            <label>Nome Completo</label>
+                            <input type="text" id="userName" class="profile-input" placeholder="Seu nome completo">
+                        </div>
+                        
+                        <div class="editable-field">
+                            <label>E-mail</label>
+                            <input type="email" id="userEmail" class="profile-input" placeholder="seu@email.com">
+                        </div>
+                        
+                        <div class="editable-field">
+                            <label>Telefone</label>
+                            <input type="tel" id="userPhone" class="profile-input" placeholder="(11) 99999-9999">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereços Favoritos -->
+            <div class="favorites-section">
+                <div class="section-header">
+                    <h2>📍 Endereços Favoritos</h2>
+                    <button class="add-btn" onclick="addFavoriteAddress()">+ Adicionar</button>
+                </div>
+                
+                <div class="favorites-list" id="favoritesList">
+                    <!-- Endereços serão carregados aqui -->
+                </div>
+            </div>
+
+            <!-- Preferências de Entrega -->
+            <div class="preferences-section">
+                <h2>⚙️ Preferências de Entrega</h2>
+                
+                <div class="preference-group">
+                    <h3>Notificações</h3>
+                    <div class="preference-item">
+                        <label class="switch">
+                            <input type="checkbox" id="pushNotifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <span class="preference-label">Notificações Push</span>
+                            <span class="preference-desc">Receber atualizações em tempo real</span>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <label class="switch">
+                            <input type="checkbox" id="smsNotifications">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <span class="preference-label">SMS</span>
+                            <span class="preference-desc">Receber SMS sobre entregas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <label class="switch">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <span class="preference-label">E-mail</span>
+                            <span class="preference-desc">Receber resumos por e-mail</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <h3>Entrega</h3>
+                    <div class="preference-item">
+                        <label class="switch">
+                            <input type="checkbox" id="fastDelivery" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <span class="preference-label">Entrega Expressa</span>
+                            <span class="preference-desc">Priorizar velocidade (custo adicional)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <label class="switch">
+                            <input type="checkbox" id="ecoDelivery">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <span class="preference-label">Entrega Eco</span>
+                            <span class="preference-desc">Priorizar sustentabilidade</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <h3>Pagamento Padrão</h3>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="defaultPayment" value="credit" checked>
+                            <span class="payment-card">
+                                <div class="payment-icon">💳</div>
+                                <div class="payment-info">
+                                    <span>Cartão de Crédito</span>
+                                    <small>**** 1234</small>
+                                </div>
+                            </span>
+                        </label>
+                        
+                        <label class="payment-option">
+                            <input type="radio" name="defaultPayment" value="pix">
+                            <span class="payment-card">
+                                <div class="payment-icon">📱</div>
+                                <div class="payment-info">
+                                    <span>PIX</span>
+                                    <small>Instantâneo</small>
+                                </div>
+                            </span>
+                        </label>
+                        
+                        <label class="payment-option">
+                            <input type="radio" name="defaultPayment" value="cash">
+                            <span class="payment-card">
+                                <div class="payment-icon">💵</div>
+                                <div class="payment-info">
+                                    <span>Dinheiro</span>
+                                    <small>Na entrega</small>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estatísticas Pessoais -->
+            <div class="stats-section">
+                <h2>📊 Suas Estatísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-value" id="totalDeliveries">0</div>
+                        <div class="stat-label">Entregas Realizadas</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" id="totalSpent">R$ 0</div>
+                        <div class="stat-label">Total Gasto</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-value" id="avgRating">0.0</div>
+                        <div class="stat-label">Avaliação Média</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🌱</div>
+                        <div class="stat-value" id="carbonSaved">0kg</div>
+                        <div class="stat-label">CO₂ Economizado</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações da Conta -->
+            <div class="account-actions">
+                <h2>🔐 Conta e Segurança</h2>
+                <div class="action-buttons">
+                    <button class="action-btn primary" onclick="changePassword()">
+                        🔑 Alterar Senha
+                    </button>
+                    <button class="action-btn secondary" onclick="exportData()">
+                        📤 Exportar Dados
+                    </button>
+                    <button class="action-btn secondary" onclick="deleteAccount()">
+                        🗑️ Excluir Conta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Adicionar Endereço -->
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Endereço Favorito</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addressForm">
+                    <div class="form-group">
+                        <label for="addressName">Nome do Endereço</label>
+                        <input type="text" id="addressName" placeholder="Ex: Casa, Trabalho, Academia" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="addressStreet">Endereço Completo</label>
+                        <input type="text" id="addressStreet" placeholder="Rua, Número, Complemento" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="addressNeighborhood">Bairro</label>
+                            <input type="text" id="addressNeighborhood" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="addressCity">Cidade</label>
+                            <input type="text" id="addressCity" value="São Paulo" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="addressNotes">Observações (opcional)</label>
+                        <textarea id="addressNotes" placeholder="Ponto de referência, instruções especiais..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn-primary" onclick="saveFavoriteAddress()">Salvar Endereço</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/perfil.js"></script>
+</body>
+</html>
