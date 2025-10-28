@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Redirecionar após 1 segundo
                 setTimeout(() => {
-                    window.location.href = '../public/dashboardUsuario.html';
+                    window.location.href = 'dashboardUsuario.html';
                 }, 1000);
                 
             } else {

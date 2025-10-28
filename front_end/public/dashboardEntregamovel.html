@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Motoboy - DropPoint</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboardMotoboy.css">
+    <!-- Google Maps API -->
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWTgKrwx_EJjQ&callback=initMap&libraries=geometry,places">
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="status-indicator" id="onlineStatus">
+                    <div class="status-dot offline" id="statusDot"></div>
+                    <span id="statusText">Offline</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="header-title">
+                    <h1>Dashboard Motoboy</h1>
+                    <p id="welcomeMessage">Bem-vindo de volta!</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="todayEarnings">R$ 0,00</span>
+                        <span class="stat-label">Hoje</span>
+                    </div>
+                    <div class="notification-btn" onclick="toggleNotifications()">
+                        <span class="notification-icon">🔔</span>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </div>
+                    <div class="profile-menu" onclick="toggleProfileMenu()">
+                        <img src="../img/motoboy-avatar.png" alt="Perfil" class="profile-avatar" id="profileAvatar">
+                        <div class="profile-name" id="profileName">Motoboy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Status Control Section -->
+            <div class="status-control-section">
+                <div class="status-card">
+                    <div class="status-header">
+                        <h2>🏍️ Status de Trabalho</h2>
+                        <div class="earnings-summary">
+                            <span>Ganhos do dia: <strong id="dailyEarnings">R$ 0,00</strong></span>
+                        </div>
+                    </div>
+                    <div class="status-controls">
+                        <div class="status-toggle">
+                            <input type="checkbox" id="workStatusToggle" class="status-checkbox">
+                            <label for="workStatusToggle" class="status-label">
+                                <div class="toggle-switch">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-title" id="statusTitle">Ficar Online</span>
+                                    <span class="status-desc" id="statusDesc">Ativar para receber pedidos</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="work-timer" id="workTimer" style="display: none;">
+                            <div class="timer-display">
+                                <span class="timer-icon">⏱️</span>
+                                <span class="timer-text" id="timerText">00:00:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="totalDeliveries">0</div>
+                        <div class="stat-label">Entregas Hoje</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="averageRating">5.0</div>
+                        <div class="stat-label">Avaliação</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="completionRate">100%</div>
+                        <div class="stat-label">Taxa de Sucesso</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="totalDistance">0km</div>
+                        <div class="stat-label">Distância</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Delivery Section -->
+            <div class="current-delivery-section" id="currentDeliverySection" style="display: none;">
+                <div class="delivery-card active">
+                    <div class="delivery-header">
+                        <h3>🚚 Entrega Atual</h3>
+                        <div class="delivery-status">
+                            <span class="status-badge in-progress" id="deliveryStatus">Em Andamento</span>
+                        </div>
+                    </div>
+                    <div class="delivery-details" id="currentDeliveryDetails">
+                        <!-- Detalhes serão preenchidos via JavaScript -->
+                    </div>
+                    <div class="delivery-actions">
+                        <button class="action-btn primary" onclick="openDeliveryMap()">
+                            📍 Ver Rota
+                        </button>
+                        <button class="action-btn secondary" onclick="contactCustomer()">
+                            📞 Contatar Cliente
+                        </button>
+                        <button class="action-btn secondary" onclick="openLiveMap()">
+                            🗺️ Mapa em Tempo Real
+                        </button>
+                        <button class="action-btn danger" onclick="completeDelivery()">
+                            ✅ Finalizar Entrega
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa em Tempo Real -->
+            <div class="map-section" id="mapSection" style="display: none;">
+                <div class="map-header">
+                    <h3>🗺️ Navegação em Tempo Real</h3>
+                    <div class="map-controls">
+                        <button class="btn-map-control" onclick="centerMap()" title="Centralizar no motoboy">
+                            📍 Centralizar
+                        </button>
+                        <button class="btn-map-control" onclick="toggleTraffic()" title="Mostrar/ocultar trânsito">
+                            🚦 Trânsito
+                        </button>
+                        <button class="btn-map-control" onclick="toggleMapType()" title="Alternar tipo de mapa">
+                            🛰️ Satélite
+                        </button>
+                        <button class="btn-map-control" onclick="closeLiveMap()" title="Fechar mapa">
+                            ❌ Fechar
+                        </button>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <div id="deliveryMap" class="google-map"></div>
+                    <div class="map-info">
+                        <div class="route-info">
+                            <div class="info-item">
+                                <span class="info-label">📍 Distância:</span>
+                                <span class="info-value" id="routeDistance">Calculando...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">⏱️ Tempo estimado:</span>
+                                <span class="info-value" id="routeTime">Calculando...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">🚦 Trânsito:</span>
+                                <span class="info-value" id="trafficStatus">Normal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance e Analytics -->
+            <div class="dashboard-section analytics-section">
+                <h2>📊 Performance e Analytics</h2>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <h3>📈 Estatísticas Semanais</h3>
+                            <button class="btn-analytics" onclick="openAnalyticsModal()">Ver Detalhes</button>
+                        </div>
+                        <div class="analytics-content">
+                            <div class="metric">
+                                <span class="metric-label">Entregas</span>
+                                <span class="metric-value" id="weeklyDeliveries">47</span>
+                                <span class="metric-change positive">+12%</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Avaliação Média</span>
+                                <span class="metric-value" id="weeklyRating">4.8</span>
+                                <span class="metric-change positive">+0.2</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Tempo Médio</span>
+                                <span class="metric-value" id="avgDeliveryTime">18min</span>
+                                <span class="metric-change negative">+2min</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <h3>🎯 Metas do Mês</h3>
+                            <button class="btn-analytics" onclick="openGoalsModal()">Gerenciar</button>
+                        </div>
+                        <div class="goals-content">
+                            <div class="goal-item">
+                                <div class="goal-info">
+                                    <span class="goal-name">Entregas do Mês</span>
+                                    <span class="goal-progress">187/200</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 93.5%"></div>
+                                </div>
+                            </div>
+                            <div class="goal-item">
+                                <div class="goal-info">
+                                    <span class="goal-name">Avaliação 5⭐</span>
+                                    <span class="goal-progress">142/150</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 94.7%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gamificação e Conquistas -->
+            <div class="dashboard-section gamification-section">
+                <h2>🏆 Gamificação e Conquistas</h2>
+                <div class="gamification-grid">
+                    <div class="badge-showcase">
+                        <h3>🏅 Badges Conquistados</h3>
+                        <div class="badges-container">
+                            <div class="badge earned" title="100 Entregas Completas">
+                                <span class="badge-icon">💯</span>
+                                <span class="badge-name">Centurião</span>
+                            </div>
+                            <div class="badge earned" title="Velocidade Média < 20min">
+                                <span class="badge-icon">⚡</span>
+                                <span class="badge-name">Veloz</span>
+                            </div>
+                            <div class="badge earned" title="Avaliação 5⭐ por 30 dias">
+                                <span class="badge-icon">⭐</span>
+                                <span class="badge-name">Estrela</span>
+                            </div>
+                            <div class="badge locked" title="500 Entregas (Em progresso: 187/500)">
+                                <span class="badge-icon">🔒</span>
+                                <span class="badge-name">Lenda</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ranking-card">
+                        <h3>🏆 Ranking Semanal</h3>
+                        <div class="ranking-list">
+                            <div class="rank-item current-user">
+                                <span class="rank-position">3º</span>
+                                <span class="rank-name">Você</span>
+                                <span class="rank-score">1,847 pts</span>
+                            </div>
+                            <div class="rank-item">
+                                <span class="rank-position">1º</span>
+                                <span class="rank-name">Carlos Silva</span>
+                                <span class="rank-score">2,156 pts</span>
+                            </div>
+                            <div class="rank-item">
+                                <span class="rank-position">2º</span>
+                                <span class="rank-name">Ana Santos</span>
+                                <span class="rank-score">1,923 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Deliveries -->
+            <div class="available-deliveries-section">
+                <div class="section-header">
+                    <h2>📋 Entregas Disponíveis</h2>
+                    <div class="filters">
+                        <select id="distanceFilter" class="filter-select">
+                            <option value="all">Todas as distâncias</option>
+                            <option value="near">Até 5km</option>
+                            <option value="medium">5-15km</option>
+                            <option value="far">Mais de 15km</option>
+                        </select>
+                        <select id="urgencyFilter" class="filter-select">
+                            <option value="all">Todas as urgências</option>
+                            <option value="ultra">Ultra rápida</option>
+                            <option value="expressa">Expressa</option>
+                            <option value="normal">Normal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="deliveries-list" id="deliveriesList">
+                    <!-- Entregas serão carregadas via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Performance Analytics -->
+            <div class="analytics-section">
+                <h2>📊 Seu Desempenho</h2>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Ganhos da Semana</h3>
+                        <div class="earnings-chart" id="weeklyChart">
+                            <div class="chart-placeholder">📈 Gráfico de ganhos</div>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Entregas por Horário</h3>
+                        <div class="time-chart" id="timeChart">
+                            <div class="chart-placeholder">⏰ Distribuição por hora</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="action-card" onclick="openHistoryPage()">
+                    <div class="action-icon">📋</div>
+                    <h3>Histórico</h3>
+                    <p>Ver entregas anteriores</p>
+                    <div class="action-arrow">→</div>
+                </div>
+                <div class="action-card" onclick="openEarningsPage()">
+                    <div class="action-icon">💰</div>
+                    <h3>Ganhos</h3>
+                    <p>Relatórios financeiros</p>
+                    <div class="action-arrow">→</div>
+                </div>
+                <div class="action-card" onclick="openSupportPage()">
+                    <div class="action-icon">🆘</div>
+                    <h3>Suporte</h3>
+                    <p>Central de ajuda</p>
+                    <div class="action-arrow">→</div>
+                </div>
+                <div class="action-card" onclick="openProfilePage()">
+                    <div class="action-icon">👤</div>
+                    <h3>Perfil</h3>
+                    <p>Configurações da conta</p>
+                    <div class="action-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>🔔 Notificações</h3>
+            <button class="close-btn" onclick="toggleNotifications()">×</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notificações serão carregadas via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Profile Menu -->
+    <div class="profile-dropdown" id="profileDropdown">
+        <div class="dropdown-item" onclick="openProfilePage()">
+            <span class="dropdown-icon">👤</span>
+            <span>Meu Perfil</span>
+        </div>
+        <div class="dropdown-item" onclick="openSettingsPage()">
+            <span class="dropdown-icon">⚙️</span>
+            <span>Configurações</span>
+        </div>
+        <div class="dropdown-item" onclick="openEarningsPage()">
+            <span class="dropdown-icon">💰</span>
+            <span>Ganhos</span>
+        </div>
+        <div class="dropdown-item" onclick="logout()">
+            <span class="dropdown-icon">🚪</span>
+            <span>Sair</span>
+        </div>
+    </div>
+
+    <!-- Chat com Cliente -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header" onclick="toggleChat()">
+            <div class="chat-info">
+                <span class="chat-avatar">👤</span>
+                <div class="chat-details">
+                    <span class="chat-name">Maria Silva</span>
+                    <span class="chat-status">Cliente • Online</span>
+                </div>
+            </div>
+            <div class="chat-actions">
+                <span class="chat-notification" id="chatNotification">3</span>
+                <button class="chat-toggle" id="chatToggle">💬</button>
+            </div>
+        </div>
+        
+        <div class="chat-body" id="chatBody">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mensagens serão inseridas aqui -->
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="chat-quick-actions">
+                    <button class="quick-action" onclick="sendQuickMessage('Estou a caminho!')">
+                        🚗 A caminho
+                    </button>
+                    <button class="quick-action" onclick="sendQuickMessage('Chegando em 5 minutos')">
+                        ⏰ 5 min
+                    </button>
+                    <button class="quick-action" onclick="sendQuickMessage('Estou no local')">
+                        📍 No local
+                    </button>
+                </div>
+                
+                <div class="chat-input-area">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="Digite sua mensagem..."
+                        onkeypress="handleChatKeyPress(event)"
+                    >
+                    <button class="chat-send" onclick="sendChatMessage()">
+                        📤
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Avaliação Pós-Entrega -->
+    <div id="ratingModal" class="modal-overlay">
+        <div class="modal-content rating-modal">
+            <div class="modal-header">
+                <h3>💫 Avaliar Cliente e Entrega</h3>
+                <button class="modal-close" onclick="closeRatingModal()">×</button>
+            </div>
+            
+            <div class="rating-section">
+                <h4>👤 Avaliação do Cliente</h4>
+                <p>Como foi sua experiência com este cliente?</p>
+                <div class="rating-stars" data-rating="customer">
+                    <span class="star" data-value="1">⭐</span>
+                    <span class="star" data-value="2">⭐</span>
+                    <span class="star" data-value="3">⭐</span>
+                    <span class="star" data-value="4">⭐</span>
+                    <span class="star" data-value="5">⭐</span>
+                </div>
+            </div>
+            
+            <div class="rating-section">
+                <h4>📍 Avaliação do Local</h4>
+                <p>Como foi o acesso e a localização?</p>
+                <div class="rating-stars" data-rating="location">
+                    <span class="star" data-value="1">⭐</span>
+                    <span class="star" data-value="2">⭐</span>
+                    <span class="star" data-value="3">⭐</span>
+                    <span class="star" data-value="4">⭐</span>
+                    <span class="star" data-value="5">⭐</span>
+                </div>
+            </div>
+            
+            <div class="rating-section">
+                <h4>💰 Avaliação do Pagamento</h4>
+                <p>O pagamento foi realizado corretamente?</p>
+                <div class="rating-stars" data-rating="payment">
+                    <span class="star" data-value="1">⭐</span>
+                    <span class="star" data-value="2">⭐</span>
+                    <span class="star" data-value="3">⭐</span>
+                    <span class="star" data-value="4">⭐</span>
+                    <span class="star" data-value="5">⭐</span>
+                </div>
+            </div>
+            
+            <div class="rating-section">
+                <h4>💭 Comentários (opcional)</h4>
+                <textarea 
+                    id="ratingComments" 
+                    placeholder="Deixe um comentário sobre a entrega..."
+                    rows="3"
+                ></textarea>
+            </div>
+            
+            <div class="rating-tags">
+                <h4>🏷️ Tags da Entrega</h4>
+                <div class="tag-options">
+                    <button class="tag-btn" data-tag="pontual">⏰ Pontual</button>
+                    <button class="tag-btn" data-tag="educado">😊 Educado</button>
+                    <button class="tag-btn" data-tag="facil-acesso">🚪 Fácil Acesso</button>
+                    <button class="tag-btn" data-tag="pagamento-ok">💳 Pagamento OK</button>
+                    <button class="tag-btn" data-tag="problemas">⚠️ Problemas</button>
+                    <button class="tag-btn" data-tag="otimo-cliente">👍 Ótimo Cliente</button>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="skipRating()">Pular</button>
+                <button class="btn-primary" onclick="submitRating()">Enviar Avaliação</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Comprovante Fotográfico -->
+    <div id="photoModal" class="modal-overlay">
+        <div class="modal-content photo-modal">
+            <div class="modal-header">
+                <h3>📸 Comprovante de Entrega</h3>
+                <button class="modal-close" onclick="closePhotoModal()">×</button>
+            </div>
+            
+            <div class="photo-capture">
+                <div class="camera-preview" id="cameraPreview">
+                    <video id="cameraVideo" autoplay muted></video>
+                    <canvas id="photoCanvas" style="display: none;"></canvas>
+                </div>
+                
+                <div class="photo-instructions">
+                    <p>📋 Tire uma foto do comprovante de entrega</p>
+                    <ul>
+                        <li>Produto entregue ao cliente</li>
+                        <li>Local da entrega (porta/portão)</li>
+                        <li>Recibo assinado (se aplicável)</li>
+                    </ul>
+                </div>
+                
+                <div class="photo-actions">
+                    <button class="btn-photo capture" onclick="capturePhoto()">
+                        📷 Capturar Foto
+                    </button>
+                    <button class="btn-photo gallery" onclick="selectFromGallery()">
+                        🖼️ Galeria
+                    </button>
+                </div>
+                
+                <div class="photo-preview" id="photoPreview" style="display: none;">
+                    <img id="capturedPhoto" alt="Foto capturada">
+                    <div class="photo-preview-actions">
+                        <button class="btn-secondary" onclick="retakePhoto()">Refazer</button>
+                        <button class="btn-primary" onclick="confirmPhoto()">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="deliveryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalhes da Entrega</h2>
+                <button class="modal-close" onclick="closeDeliveryModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="deliveryModalContent">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeDeliveryModal()">Fechar</button>
+                <button class="btn-primary" onclick="acceptDelivery()">Aceitar Entrega</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/dashboardMotoboy.js"></script>
+</body>
+</html>

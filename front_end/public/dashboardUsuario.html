@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DropPoint</title>
+    <link rel="stylesheet" href="../css/dashboardUsuario.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Maps API -->
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWTgKrwx_EJjQ&callback=initClientMap&libraries=geometry,places">
+    </script>
+</head>
+
+<body>
+    <!-- Header com navegação -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="../img/Logo.png" alt="DropPoint" class="logo">
+                <h1>DropPoint</h1>
+            </div>
+            <div class="user-section">
+                <span class="welcome-text">Olá, <span id="userName">Usuário</span>!</span>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Seção do Perfil -->
+            <div class="profile-section">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <img src="../img/user-avatar.png" alt="Avatar do usuário" id="userAvatar">
+                        <div class="avatar-placeholder">👤</div>
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Usuário</h2>
+                        <p id="profileEmail">usuario@email.com</p>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">Pedidos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">2</span>
+                                <span class="stat-label">Em andamento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu de Ações -->
+            <div class="actions-grid">
+                <div class="action-card" onclick="navigateTo('cadastrarPedido.html')">
+                    <div class="action-icon">📦</div>
+                    <h3>Cadastrar Pedido</h3>
+                    <p>Criar uma nova solicitação de entrega</p>
+                    <div class="action-arrow">→</div>
+                </div>
+
+                <div class="action-card" onclick="navigateTo('acompanharPedidos.html')">
+                    <div class="action-icon">📍</div>
+                    <h3>Acompanhar Pedidos</h3>
+                    <p>Veja o status das suas entregas em tempo real</p>
+                    <div class="action-arrow">→</div>
+                </div>
+
+                <div class="action-card" onclick="navigateTo('historicoDePedidos.html')">
+                    <div class="action-icon">📋</div>
+                    <h3>Histórico</h3>
+                    <p>Consulte todas as suas entregas anteriores</p>
+                    <div class="action-arrow">→</div>
+                </div>
+
+                <div class="action-card" onclick="navigateTo('avaliacoes.html')">
+                    <div class="action-icon">⭐</div>
+                    <h3>Avaliações</h3>
+                    <p>Avalie entregas e compartilhe sua experiência</p>
+                    <div class="action-arrow">→</div>
+                </div>
+
+                <div class="action-card" onclick="navigateTo('perfil.html')">
+                    <div class="action-icon">👤</div>
+                    <h3>Meu Perfil</h3>
+                    <p>Gerencie suas informações e preferências</p>
+                    <div class="action-arrow">→</div>
+                </div>
+
+                <div class="action-card" onclick="openLiveTracking()">
+                    <div class="action-icon">🗺️</div>
+                    <h3>Rastreamento ao Vivo</h3>
+                    <p>Veja seu motoboy chegando em tempo real</p>
+                    <div class="action-arrow">→</div>
+                </div>
+
+                <div class="action-card" onclick="navigateTo('dashboardEntregamovel.html')">
+                    <div class="action-icon">🚚</div>
+                    <h3>Entrega Móvel</h3>
+                    <p>Serviços especiais de entrega móvel</p>
+                    <div class="action-arrow">→</div>
+                </div>
+            </div>
+
+            <!-- Pedidos Recentes -->
+            <div class="recent-orders">
+                <h2>Pedidos Recentes</h2>
+                <div class="orders-list" id="recentOrdersList">
+                    <!-- Pedidos serão carregados via JavaScript -->
+                </div>
+                <button class="view-all-btn" onclick="navigateTo('historicoDePedidos.html')">
+                    Ver Todos os Pedidos
+                </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Ações Rápidas</h2>
+                <div class="quick-buttons">
+                    <button class="quick-btn emergency" onclick="emergencyContact()">
+                        🚨 Emergência
+                    </button>
+                    <button class="quick-btn support" onclick="openChat('support')">
+                        💬 Suporte
+                    </button>
+                    <button class="quick-btn tracking" onclick="quickTracking()">
+                        🔍 Rastrear
+                    </button>
+                    <button class="quick-btn chat" onclick="openChat('motoboy')">
+                        📱 Chat Motoboy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header" onclick="toggleChat()">
+            <div class="chat-avatar">💬</div>
+            <div class="chat-info">
+                <span class="chat-name" id="chatName">Suporte</span>
+                <span class="chat-status" id="chatStatus">Online</span>
+            </div>
+            <button class="chat-toggle" id="chatToggle">▼</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mensagens serão adicionadas aqui -->
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Digite sua mensagem..." class="chat-input">
+                <button onclick="sendMessage()" class="send-btn">📤</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Rastreamento Rápido -->
+    <div id="trackingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Rastreamento Rápido</h2>
+            <div class="tracking-form">
+                <input type="text" id="trackingCode" placeholder="Digite o código do pedido">
+                <button onclick="trackOrder()">Rastrear</button>
+            </div>
+            <div id="trackingResult"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Rastreamento em Tempo Real -->
+    <div id="liveTrackingModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content tracking-modal">
+            <div class="modal-header">
+                <h3>🗺️ Rastreamento em Tempo Real</h3>
+                <button class="modal-close" onclick="closeTracking()">×</button>
+            </div>
+            
+            <div class="tracking-info">
+                <div class="delivery-status-bar">
+                    <div class="status-step completed">
+                        <div class="step-icon">✅</div>
+                        <span>Pedido Confirmado</span>
+                    </div>
+                    <div class="status-step completed">
+                        <div class="step-icon">🏍️</div>
+                        <span>Motoboy a Caminho</span>
+                    </div>
+                    <div class="status-step active">
+                        <div class="step-icon">📍</div>
+                        <span>Em Rota</span>
+                    </div>
+                    <div class="status-step">
+                        <div class="step-icon">📦</div>
+                        <span>Entregue</span>
+                    </div>
+                </div>
+                
+                <div class="motoboy-info">
+                    <div class="motoboy-avatar">
+                        <img src="../img/motoboy-avatar.png" alt="Motoboy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlOWVjZWYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDEyQzE0LjIwOTEgMTIgMTYgMTAuMjA5MSAxNiA4QzE2IDUuNzkwODYgMTQuMjA5MSA0IDEyIDRDOS43OTA4NiA0IDggNS43OTA4NiA4IDhDOCAxMC4yMDkxIDkuNzkwODYgMTIgMTIgMTJaIiBmaWxsPSIjNjY3ZWVhIi8+CjxwYXRoIGQ9Ik0xMiAxNEM5LjM0IDE0IDQgMTUuMzQgNCAyMFYyMkgxNlYyMEMxNiAxNS4zNCAxMC42NiAxNCAxMiAxNFoiIGZpbGw9IiM2NjdlZWEiLz4KPC9zdmc+Cjwvc3ZnPgo='">
+                    </div>
+                    <div class="motoboy-details">
+                        <h4>João Silva</h4>
+                        <div class="motoboy-rating">⭐ 4.9 • Honda CG 160</div>
+                        <div class="motoboy-distance">📍 A 2.3km de você • Chegando em 8 min</div>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="btn-contact" onclick="callMotoboy()" title="Ligar para o motoboy">
+                            📞
+                        </button>
+                        <button class="btn-contact" onclick="chatWithMotoboy()" title="Conversar via chat">
+                            💬
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-container-client">
+                <div id="clientTrackingMap" class="google-map-client"></div>
+            </div>
+            
+            <div class="delivery-timeline">
+                <h4>📋 Atualizações da Entrega</h4>
+                <div class="timeline-list">
+                    <div class="timeline-item">
+                        <span class="timeline-time">14:32</span>
+                        <span class="timeline-event">🏍️ Motoboy saiu para entrega</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">14:28</span>
+                        <span class="timeline-event">📦 Pedido retirado na loja</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">14:15</span>
+                        <span class="timeline-event">✅ Pedido confirmado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/dashboardUsuario.js"></script>
+</body>
+
+</html>

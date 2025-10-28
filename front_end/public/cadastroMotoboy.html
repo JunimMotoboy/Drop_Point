@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/cadastroMotoboy.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>DropPoint - Cadastro de Motoboy</title>
+</head>
+<body class="cadastro">
+    
+    <div class="back-button">
+        <button onclick="window.location.href='loginMotoboy.html'" class="btn-back" aria-label="Voltar para login">
+            <img src="../img/seta-esquerda.png" alt="Voltar">
+        </button>
+    </div>
+
+    <div class="container-cadastro-motoboy">
+        <div class="header-cadastro">
+            <h1 class="texto-cadastro">Cadastrar-se como Motoboy</h1>
+            <p class="subtitulo">Preencha os dados abaixo para se tornar um entregador</p>
+        </div>
+
+        <div class="logo-wrapper">
+            <img class="logo-imagem" src="../img/Logo.png" alt="DropPoint Logo">
+        </div>
+
+        <form class="form-cadastro" id="cadastroMotoboyForm" novalidate>
+            <!-- Dados Pessoais -->
+            <div class="section-title">
+                <h3>📋 Dados Pessoais</h3>
+            </div>
+
+            <div class="input-group">
+                <label for="nome" class="label-input">Nome completo</label>
+                <input 
+                    id="nome" 
+                    name="nome" 
+                    class="input-field" 
+                    type="text" 
+                    placeholder="Digite seu nome completo" 
+                    required
+                    minlength="3"
+                    maxlength="50"
+                >
+                <span class="error-message" id="nome-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="email" class="label-input">E-mail</label>
+                <input 
+                    id="email" 
+                    name="email" 
+                    class="input-field" 
+                    type="email" 
+                    placeholder="Digite seu e-mail" 
+                    required
+                >
+                <span class="error-message" id="email-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="telefone" class="label-input">Telefone</label>
+                <input 
+                    id="telefone" 
+                    name="telefone" 
+                    class="input-field" 
+                    type="tel" 
+                    placeholder="(11) 99999-9999" 
+                    required
+                >
+                <span class="error-message" id="telefone-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="cpf" class="label-input">CPF</label>
+                <input 
+                    id="cpf" 
+                    name="cpf" 
+                    class="input-field" 
+                    type="text" 
+                    placeholder="000.000.000-00" 
+                    required
+                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                >
+                <span class="error-message" id="cpf-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="cnh" class="label-input">CNH</label>
+                <input 
+                    id="cnh" 
+                    name="cnh" 
+                    class="input-field" 
+                    type="text" 
+                    placeholder="Digite o número da sua CNH" 
+                    required
+                >
+                <span class="error-message" id="cnh-error"></span>
+            </div>
+
+            <!-- Senha -->
+            <div class="section-title">
+                <h3>🔒 Senha de Acesso</h3>
+            </div>
+
+            <div class="input-group">
+                <label for="senha" class="label-input">Senha</label>
+                <div class="password-container">
+                    <input 
+                        id="senha" 
+                        name="senha" 
+                        class="input-field" 
+                        type="password" 
+                        placeholder="Digite sua senha" 
+                        required
+                        minlength="6"
+                    >
+                    <button type="button" class="toggle-password" onclick="togglePassword('senha')">
+                        👁️
+                    </button>
+                </div>
+                <div class="password-strength" id="password-strength"></div>
+                <span class="error-message" id="senha-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmarSenha" class="label-input">Confirmar senha</label>
+                <div class="password-container">
+                    <input 
+                        id="confirmarSenha" 
+                        name="confirmarSenha" 
+                        class="input-field" 
+                        type="password" 
+                        placeholder="Confirme sua senha" 
+                        required
+                    >
+                    <button type="button" class="toggle-password" onclick="togglePassword('confirmarSenha')">
+                        👁️
+                    </button>
+                </div>
+                <span class="error-message" id="confirmarSenha-error"></span>
+            </div>
+
+            <!-- Informações do Veículo -->
+            <div class="section-title">
+                <h3>🏍️ Informações do Veículo</h3>
+            </div>
+
+            <div class="input-group">
+                <label for="placaMoto" class="label-input">Placa da moto</label>
+                <input 
+                    id="placaMoto" 
+                    name="placaMoto" 
+                    class="input-field" 
+                    type="text" 
+                    placeholder="ABC-1234" 
+                    required
+                    pattern="[A-Z]{3}-\d{4}"
+                >
+                <span class="error-message" id="placaMoto-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="modeloMoto" class="label-input">Modelo da moto</label>
+                <input 
+                    id="modeloMoto" 
+                    name="modeloMoto" 
+                    class="input-field" 
+                    type="text" 
+                    placeholder="Ex: Honda CG 160" 
+                    required
+                >
+                <span class="error-message" id="modeloMoto-error"></span>
+            </div>
+
+            <!-- Documentos -->
+            <div class="section-title">
+                <h3>📄 Documentos</h3>
+                <p class="section-subtitle">Envie fotos nítidas dos documentos solicitados</p>
+            </div>
+
+            <div class="file-upload-group">
+                <div class="file-upload">
+                    <label for="fotoDoc" class="file-upload-label">
+                        <div class="file-upload-icon">📷</div>
+                        <span>Foto do Documento (RG ou CNH)</span>
+                        <input type="file" id="fotoDoc" name="fotoDoc" accept="image/*" required>
+                    </label>
+                    <span class="file-name" id="fotoDoc-name"></span>
+                    <span class="error-message" id="fotoDoc-error"></span>
+                </div>
+
+                <div class="file-upload">
+                    <label for="comprovanteEndereco" class="file-upload-label">
+                        <div class="file-upload-icon">🏠</div>
+                        <span>Comprovante de Endereço</span>
+                        <input type="file" id="comprovanteEndereco" name="comprovanteEndereco" accept="image/*,application/pdf" required>
+                    </label>
+                    <span class="file-name" id="comprovanteEndereco-name"></span>
+                    <span class="error-message" id="comprovanteEndereco-error"></span>
+                </div>
+
+                <div class="file-upload">
+                    <label for="documentoMoto" class="file-upload-label">
+                        <div class="file-upload-icon">🏍️</div>
+                        <span>Documento da Moto (CRLV)</span>
+                        <input type="file" id="documentoMoto" name="documentoMoto" accept="image/*,application/pdf" required>
+                    </label>
+                    <span class="file-name" id="documentoMoto-name"></span>
+                    <span class="error-message" id="documentoMoto-error"></span>
+                </div>
+            </div>
+
+            <!-- Termos -->
+            <div class="terms-container">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <span class="checkmark"></span>
+                    Aceito os <a href="#" class="link-terms">termos de uso</a> e <a href="#" class="link-terms">política de privacidade</a>
+                </label>
+                <span class="error-message" id="terms-error"></span>
+            </div>
+
+            <div class="terms-container">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="dataTerms" name="dataTerms" required>
+                    <span class="checkmark"></span>
+                    Autorizo o uso dos meus dados para verificação e cadastro
+                </label>
+                <span class="error-message" id="dataTerms-error"></span>
+            </div>
+
+            <button type="submit" class="btn-cadastrar-motoboy" id="submitBtn">
+                <span class="btn-text">Cadastrar-se</span>
+                <div class="loading-spinner" style="display: none;"></div>
+            </button>
+
+            <div class="login-link">
+                <p>Já tem uma conta? <a href="loginMotoboy.html" class="link-login">Fazer login</a></p>
+            </div>
+        </form>
+
+        <div class="info-section">
+            <h3>📝 Processo de Aprovação</h3>
+            <div class="approval-steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <span>Análise de documentos</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <span>Verificação de antecedentes</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span>Aprovação em até 48h</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar visibilidade da senha
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const button = field.nextElementSibling;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                field.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        // Função para mostrar nome do arquivo selecionado
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const fileName = this.files[0]?.name || '';
+                const nameSpan = document.getElementById(this.id + '-name');
+                if (nameSpan) {
+                    nameSpan.textContent = fileName;
+                    nameSpan.style.display = fileName ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Máscara para CPF
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = value;
+        });
+
+        // Máscara para telefone
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{2})(\d)/, '($1) $2');
+            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            e.target.value = value;
+        });
+
+        // Máscara para placa
+        document.getElementById('placaMoto').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+            value = value.replace(/(\w{3})(\w)/, '$1-$2');
+            e.target.value = value;
+        });
+
+        // Validação do formulário
+        document.getElementById('cadastroMotoboyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simular envio
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const spinner = submitBtn.querySelector('.loading-spinner');
+            
+            btnText.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Cadastro enviado com sucesso! Você receberá um e-mail com as próximas etapas.');
+                window.location.href = 'loginMotoboy.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -68,7 +68,7 @@ function initClientMap() {
 
 // Abrir rastreamento ao vivo
 function openLiveTracking() {
-    const modal = document.getElementById('trackingModal');
+    const modal = document.getElementById('liveTrackingModal');
     if (!modal) {
         console.error('Modal de rastreamento não encontrado');
         return;
@@ -92,7 +92,7 @@ function openLiveTracking() {
 
 // Fechar modal de rastreamento
 function closeTracking() {
-    const modal = document.getElementById('trackingModal');
+    const modal = document.getElementById('liveTrackingModal');
     if (modal) {
         modal.style.display = 'none';
     }
@@ -115,7 +115,7 @@ function initTrackingMap() {
         return;
     }
     
-    const mapElement = document.getElementById('trackingMap');
+    const mapElement = document.getElementById('clientTrackingMap');
     if (!mapElement) {
         console.error('Elemento do mapa de rastreamento não encontrado');
         return;
@@ -410,7 +410,7 @@ function chatWithMotoboy() {
 
 // Simulação para quando Google Maps não estiver disponível
 function simulateTrackingMap() {
-    const mapElement = document.getElementById('trackingMap');
+    const mapElement = document.getElementById('clientTrackingMap');
     if (mapElement) {
         mapElement.innerHTML = `
             <div style="
@@ -915,7 +915,7 @@ function setupEventListeners() {
     });
     
     // Fechar modal de rastreamento clicando fora
-    const trackingModal = document.getElementById('trackingModal');
+    const trackingModal = document.getElementById('liveTrackingModal');
     if (trackingModal) {
         trackingModal.addEventListener('click', function(e) {
             if (e.target === trackingModal) {

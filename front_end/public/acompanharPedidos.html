@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DropPoint - Acompanhar Pedidos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/acompanharPedidos.css">
+</head>
+
+<body>
+    <!-- Header com navegação -->
+    <header class="header">
+        <div class="header-content">
+            <button onclick="window.location.href='dashboardUsuario.html'" class="btn-back" aria-label="Voltar ao dashboard">
+                <img src="../img/seta-esquerda.png" alt="Voltar">
+            </button>
+            <div class="header-title">
+                <h1>Acompanhar Pedidos</h1>
+                <p>Monitore suas entregas em tempo real</p>
+            </div>
+            <button class="refresh-btn" onclick="refreshOrders()" aria-label="Atualizar pedidos">
+                🔄
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Filtros e busca -->
+            <div class="filters-section">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar por código ou endereço..." class="search-input">
+                    <button onclick="searchOrders()" class="search-btn">🔍</button>
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterOrders('all')">Todos</button>
+                    <button class="filter-tab" onclick="filterOrders('pending')">Pendentes</button>
+                    <button class="filter-tab" onclick="filterOrders('in-progress')">Em Andamento</button>
+                    <button class="filter-tab" onclick="filterOrders('delivered')">Entregues</button>
+                </div>
+            </div>
+
+            <!-- Lista de pedidos -->
+            <div class="orders-section">
+                <div class="orders-header">
+                    <h2>Seus Pedidos <span id="ordersCount">(3)</span></h2>
+                    <button class="new-order-btn" onclick="window.location.href='cadastrarPedido.html'">
+                        + Novo Pedido
+                    </button>
+                </div>
+
+                <div class="orders-list" id="ordersList">
+                    <!-- Pedidos serão carregados via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Estados vazios -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📦</div>
+                <h3>Nenhum pedido encontrado</h3>
+                <p>Você ainda não possui pedidos ou nenhum corresponde ao filtro selecionado.</p>
+                <button class="primary-btn" onclick="window.location.href='cadastrarPedido.html'">
+                    Criar Primeiro Pedido
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de detalhes do pedido -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalhes do Pedido</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de rastreamento -->
+    <div id="trackingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Rastreamento em Tempo Real</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tracking-info" id="trackingInfo">
+                    <!-- Informações de rastreamento -->
+                </div>
+                <div class="tracking-map">
+                    <div class="map-placeholder">
+                        🗺️ Mapa será carregado aqui
+                        <br><small>Integração com Google Maps em desenvolvimento</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/acompanharPedidos.js"></script>
+</body>
+
+</html>
