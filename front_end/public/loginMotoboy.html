@@ -13,7 +13,7 @@
 <body class="login">
     
     <div class="back-button">
-        <button onclick="window.location.href='../../index.html'" class="btn-back" aria-label="Voltar ao início">
+        <button onclick="goBack()" class="btn-back" aria-label="Voltar">
             <img src="../img/seta-esquerda.png" alt="Voltar">
         </button>
     </div>
@@ -70,7 +70,7 @@
                     <div class="loading-spinner" style="display: none;"></div>
                 </button>
                 
-                <button type="button" class="btn-cadastrar" onclick="window.location.href='cadastroMotoboy.html'">
+                <button type="button" class="btn-cadastrar" onclick="navigateTo('cadastroMotoboy')">
                     Cadastrar-se
                 </button>
             </div>
@@ -81,10 +81,12 @@
         </div>
 
         <div class="user-link">
-            <p>É cliente? <a href="loginUsuario.html" class="link-user">Clique aqui</a></p>
+            <p>É cliente? <a href="#" onclick="navigateTo('loginUsuario')" class="link-user">Clique aqui</a></p>
         </div>
     </div>
 
+    <script src="../script/navigation.js"></script>
+    <script src="../script/utils.js"></script>
     <script src="../script/loginMotoboy.js"></script>
 </body>
 </html>

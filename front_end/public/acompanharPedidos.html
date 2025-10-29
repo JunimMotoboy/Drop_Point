@@ -15,7 +15,7 @@
     <!-- Header com navegação -->
     <header class="header">
         <div class="header-content">
-            <button onclick="window.location.href='dashboardUsuario.html'" class="btn-back" aria-label="Voltar ao dashboard">
+            <button onclick="goBack()" class="btn-back" aria-label="Voltar">
                 <img src="../img/seta-esquerda.png" alt="Voltar">
             </button>
             <div class="header-title">
@@ -48,7 +48,7 @@
             <div class="orders-section">
                 <div class="orders-header">
                     <h2>Seus Pedidos <span id="ordersCount">(3)</span></h2>
-                    <button class="new-order-btn" onclick="window.location.href='cadastrarPedido.html'">
+                    <button class="new-order-btn" onclick="navigateTo('cadastrarPedido')">
                         + Novo Pedido
                     </button>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="empty-icon">📦</div>
                 <h3>Nenhum pedido encontrado</h3>
                 <p>Você ainda não possui pedidos ou nenhum corresponde ao filtro selecionado.</p>
-                <button class="primary-btn" onclick="window.location.href='cadastrarPedido.html'">
+                <button class="primary-btn" onclick="navigateTo('cadastrarPedido')">
                     Criar Primeiro Pedido
                 </button>
             </div>
@@ -104,6 +104,8 @@
         </div>
     </div>
 
+    <script src="../script/navigation.js"></script>
+    <script src="../script/utils.js"></script>
     <script src="../script/acompanharPedidos.js"></script>
 </body>
 

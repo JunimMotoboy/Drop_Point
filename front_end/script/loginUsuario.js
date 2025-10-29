@@ -1,11 +1,23 @@
 // Configuração e validação do formulário de login
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se já está logado
+    if (window.DropPointNav) {
+        const user = window.DropPointNav.getCurrentUser();
+        if (user && user.type === 'usuario') {
+            window.DropPointNav.navigateTo('dashboardUsuario');
+            return;
+        }
+    }
+
     const loginForm = document.getElementById('loginForm');
     const emailInput = document.getElementById('email');
     const senhaInput = document.getElementById('senha');
     const loginBtn = document.getElementById('loginBtn');
     const loadingSpinner = document.querySelector('.loading-spinner');
     const btnText = document.querySelector('.btn-text');
+
+    // API Configuration
+    const API_BASE = 'http://localhost:3000/api';
 
     // Validação em tempo real
     emailInput.addEventListener('blur', validateEmail);
@@ -73,34 +85,61 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoading();
 
         try {
-            // Simular chamada à API (substitua pela sua lógica de autenticação)
-            const loginData = {
-                email: emailInput.value.trim(),
-                senha: senhaInput.value.trim()
-            };
+            // Fazer login no backend
+            const response = await fetch(`${API_BASE}/auth/login/usuario`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: emailInput.value.trim(),
+                    senha: senhaInput.value.trim()
+                })
+            });
 
-            // Simulação de login (substitua pela chamada real à API)
-            const loginResult = await simulateLogin(loginData);
+            const result = await response.json();
             
-            if (loginResult.success) {
+            if (response.ok && result.token) {
                 // Salvar dados do usuário no localStorage
-                localStorage.setItem('user', JSON.stringify(loginResult.user));
-                localStorage.setItem('isLoggedIn', 'true');
+                const userData = {
+                    ...result.usuario,
+                    token: result.token,
+                    refreshToken: result.refreshToken,
+                    type: 'usuario'
+                };
+                
+                localStorage.setItem('droppoint_user', JSON.stringify(userData));
+                localStorage.setItem('droppoint_token', result.token);
+                localStorage.setItem('droppoint_refresh_token', result.refreshToken);
                 
                 // Mostrar sucesso
-                showSuccess('Login realizado com sucesso!');
+                if (window.DropPointNav) {
+                    window.DropPointNav.showNotification('Login realizado com sucesso!', 'success');
+                } else {
+                    showSuccess('Login realizado com sucesso!');
+                }
                 
                 // Redirecionar após 1 segundo
                 setTimeout(() => {
-                    window.location.href = 'dashboardUsuario.html';
+                    if (window.DropPointNav) {
+                        window.DropPointNav.navigateTo('dashboardUsuario');
+                    } else {
+                        window.location.href = 'dashboardUsuario.html';
+                    }
                 }, 1000);
                 
             } else {
-                throw new Error(loginResult.message || 'Credenciais inválidas');
+                throw new Error(result.error || result.message || 'Credenciais inválidas');
             }
             
         } catch (error) {
-            showAlert('Erro no login: ' + error.message, 'error');
+            console.error('Erro no login:', error);
+            
+            if (window.DropPointNav) {
+                window.DropPointNav.showNotification('Erro no login: ' + error.message, 'error');
+            } else {
+                showAlert('Erro no login: ' + error.message, 'error');
+            }
         } finally {
             hideLoading();
         }

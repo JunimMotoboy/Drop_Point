@@ -58,35 +58,35 @@
 
             <!-- Menu de Ações -->
             <div class="actions-grid">
-                <div class="action-card" onclick="navigateTo('cadastrarPedido.html')">
+                <div class="action-card" onclick="navigateTo('cadastrarPedido')">
                     <div class="action-icon">📦</div>
                     <h3>Cadastrar Pedido</h3>
                     <p>Criar uma nova solicitação de entrega</p>
                     <div class="action-arrow">→</div>
                 </div>
 
-                <div class="action-card" onclick="navigateTo('acompanharPedidos.html')">
+                <div class="action-card" onclick="navigateTo('acompanharPedidos')">
                     <div class="action-icon">📍</div>
                     <h3>Acompanhar Pedidos</h3>
                     <p>Veja o status das suas entregas em tempo real</p>
                     <div class="action-arrow">→</div>
                 </div>
 
-                <div class="action-card" onclick="navigateTo('historicoDePedidos.html')">
+                <div class="action-card" onclick="navigateTo('historicoDePedidos')">
                     <div class="action-icon">📋</div>
                     <h3>Histórico</h3>
                     <p>Consulte todas as suas entregas anteriores</p>
                     <div class="action-arrow">→</div>
                 </div>
 
-                <div class="action-card" onclick="navigateTo('avaliacoes.html')">
+                <div class="action-card" onclick="navigateTo('avaliacoes')">
                     <div class="action-icon">⭐</div>
                     <h3>Avaliações</h3>
                     <p>Avalie entregas e compartilhe sua experiência</p>
                     <div class="action-arrow">→</div>
                 </div>
 
-                <div class="action-card" onclick="navigateTo('perfil.html')">
+                <div class="action-card" onclick="navigateTo('perfil')">
                     <div class="action-icon">👤</div>
                     <h3>Meu Perfil</h3>
                     <p>Gerencie suas informações e preferências</p>
@@ -100,7 +100,7 @@
                     <div class="action-arrow">→</div>
                 </div>
 
-                <div class="action-card" onclick="navigateTo('dashboardEntregamovel.html')">
+                <div class="action-card" onclick="navigateTo('dashboardEntregamovel')">
                     <div class="action-icon">🚚</div>
                     <h3>Entrega Móvel</h3>
                     <p>Serviços especiais de entrega móvel</p>
@@ -114,7 +114,7 @@
                 <div class="orders-list" id="recentOrdersList">
                     <!-- Pedidos serão carregados via JavaScript -->
                 </div>
-                <button class="view-all-btn" onclick="navigateTo('historicoDePedidos.html')">
+                <button class="view-all-btn" onclick="navigateTo('historicoDePedidos')">
                     Ver Todos os Pedidos
                 </button>
             </div>
@@ -246,6 +246,7 @@
         </div>
     </div>
 
+    <script src="../script/navigation.js"></script>
     <script src="../script/dashboardUsuario.js"></script>
 </body>
 

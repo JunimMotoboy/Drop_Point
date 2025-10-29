@@ -1,171 +1,1005 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DropPoint - Entrega Rápida e Segura</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="./front_end/css/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>DropPoint - Entrega Rápida e Segura</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="DropPoint - Plataforma de entregas rápidas e seguras. Conectamos você aos melhores motoboys da sua região.">
+    <meta name="keywords" content="entrega, delivery, motoboy, rápido, seguro, droppoint">
+    <meta name="author" content="DropPoint">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-TileColor" content="#3498db">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://droppoint.com/">
+    <meta property="og:title" content="DropPoint - Entrega Rápida e Segura">
+    <meta property="og:description" content="Conectamos você aos melhores motoboys da sua região para entregas rápidas e seguras.">
+    <meta property="og:image" content="./front_end/img/Logo.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./front_end/img/favicon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./front_end/css/index.css">
+    <link rel="stylesheet" href="./front_end/css/index-modern.css">
+    <link rel="stylesheet" href="./front_end/css/image-fallbacks.css">
+    
+    <!-- Loading Animation -->
+    <style>
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #070707 0%, #3c3b3c 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-animation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden { opacity: 0; pointer-events: none; }
+    </style>
 </head>
 
-<header>
-  <div class="header-top">
-    <div class="container">
-      <img src="./front_end/img/Logo.png" alt="Logo Drop Point">
-      <h1>Drop Point</h1>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-animation">
+            <div class="spinner"></div>
+            <h3>Carregando DropPoint...</h3>
+            <p>Preparando sua experiência de entrega</p>
+        </div>
     </div>
 
-    <nav>
-      <button class="menu-hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-  </div>
-  
-  <div class="box-button" id="menu-buttons">
-    <a href="./front_end/public/loginUsuario.html">Entrar</a>
-    <a href="./front_end/public/loginMotoboy.html">Sou Motorista</a>
-  </div>
-</header>
+    <!-- Header -->
+    <header class="modern-header">
+        <div class="header-container">
+            <div class="brand-section">
+                <img src="./front_end/img/Logo.png" alt="DropPoint Logo" class="logo">
+                <h1 class="brand-name">DropPoint</h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active">Início</a></li>
+                    <li><a href="#about" class="nav-link">Sobre</a></li>
+                    <li><a href="#how-it-works" class="nav-link">Como Funciona</a></li>
+                    <li><a href="#pricing" class="nav-link">Preços</a></li>
+                    <li><a href="#contact" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="navigateTo('loginUsuario')">
+                    <span class="btn-icon">👤</span>
+                    Entrar
+                </button>
+                <button class="btn-driver" onclick="navigateTo('loginMotoboy')">
+                    <span class="btn-icon">🏍️</span>
+                    Sou Motoboy
+                </button>
+            </div>
+            
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <div class="mobile-nav-links">
+                    <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">Início</a>
+                    <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">Sobre</a>
+                    <a href="#how-it-works" class="mobile-nav-link" onclick="closeMobileMenu()">Como Funciona</a>
+                    <a href="#pricing" class="mobile-nav-link" onclick="closeMobileMenu()">Preços</a>
+                    <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">Contato</a>
+                </div>
+                <div class="mobile-auth-buttons">
+                    <button class="mobile-btn-login" onclick="navigateTo('loginUsuario')">
+                        <span class="btn-icon">👤</span>
+                        Entrar
+                    </button>
+                    <button class="mobile-btn-driver" onclick="navigateTo('loginMotoboy')">
+                        <span class="btn-icon">🏍️</span>
+                        Sou Motoboy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
 <body>
-  <main class="main-content">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="d-block w-100" src="./front_end/img/carousel-1.png" alt="Primeiro Slide">
-          <div class="carousel-caption">
-            <h2>Entrega Rápida e Segura</h2>
-            <p>Conectamos você aos melhores motoboys da sua região</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="d-block w-100" src="./front_end/img/carousel-2.png" alt="Segundo Slide">
-          <div class="carousel-caption">
-            <h2>Acompanhe em Tempo Real</h2>
-            <p>Saiba onde está sua encomenda a qualquer momento</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-background">
+                <div class="hero-overlay"></div>
+                <video class="hero-video" autoplay muted loop poster="./front_end/img/hero-poster.jpg">
+                    <source src="./front_end/video/hero-video.mp4" type="video/mp4">
+                    <!-- Fallback para navegadores que não suportam video -->
+                </video>
+            </div>
+            
+            <div class="hero-content">
+                <div class="container">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            <span class="highlight">Entrega Rápida</span><br>
+                            e Segura na Palma da Sua Mão
+                        </h1>
+                        <p class="hero-subtitle">
+                            Conectamos você aos melhores motoboys da sua região para entregas 
+                            rápidas, seguras e com o melhor preço do mercado.
+                        </p>
+                        
+                        
+                        
+                        <div class="hero-actions">
+                            <button class="btn-hero-primary" onclick="navigateTo('loginUsuario')">
+                                <span class="btn-icon">🚀</span>
+                                Fazer Pedido Agora
+                            </button>
+                            <button class="btn-hero-secondary" onclick="scrollToSection('how-it-works')">
+                                <span class="btn-icon">📱</span>
+                                Como Funciona
+                            </button>
+                        </div>
+                        
+                        <div class="hero-trust-badges">
+                            <div class="trust-badge">
+                                <span class="badge-icon">🔒</span>
+                                <span class="badge-text">100% Seguro</span>
+                            </div>
+                            <div class="trust-badge">
+                                <span class="badge-icon">⚡</span>
+                                <span class="badge-text">Entrega Rápida</span>
+                            </div>
+                            <div class="trust-badge">
+                                <span class="badge-icon">💰</span>
+                                <span class="badge-text">Melhor Preço</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator">
+                <div class="scroll-arrow" onclick="scrollToSection('about')"></div>
+                <span class="scroll-text">Role para descobrir mais</span>
+            </div>
+        </section>
 
-    <!-- Seção Sobre o Serviço -->
-    <section class="about-section">
-      <div class="container">
-        <h2>Por que escolher o DropPoint?</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <h3>Entrega Rápida</h3>
-            <p>Entregas em até 2 horas na sua região</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">📱</div>
-            <h3>Acompanhamento</h3>
-            <p>Monitore sua entrega em tempo real</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">💰</div>
-            <h3>Melhor Preço</h3>
-            <p>Preços competitivos e transparentes</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🔒</div>
-            <h3>Segurança</h3>
-            <p>Motoboys verificados e seguros</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- Quick Order Section -->
+        <section class="quick-order-section">
+            <div class="container">
+                <div class="quick-order-card">
+                    <h3>🚀 Calculadora de Entrega Rápida</h3>
+                    <p>Descubra quanto custa sua entrega em segundos</p>
+                    
+                    <form class="quick-order-form" id="quickOrderForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pickup">📍 Retirada</label>
+                                <input type="text" id="pickup" placeholder="De onde vamos buscar?" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery">🎯 Entrega</label>
+                                <input type="text" id="delivery" placeholder="Para onde vamos levar?" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="urgency">⚡ Urgência</label>
+                                <select id="urgency" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="normal">Normal (até 2h) - Econômico</option>
+                                    <option value="express">Expressa (até 1h) - +50%</option>
+                                    <option value="ultra">Ultra Rápida (até 30min) - +100%</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn-calculate">
+                                    <span class="btn-icon">💰</span>
+                                    Calcular Preço
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <div class="price-result" id="priceResult" style="display: none;">
+                        <div class="price-display">
+                            <span class="price-label">Preço estimado:</span>
+                            <span class="price-value" id="priceValue">R$ 0,00</span>
+                        </div>
+                        <div class="price-details">
+                            <span class="distance-info" id="distanceInfo">Distância: 0 km</span>
+                            <span class="time-info" id="timeInfo">Tempo: 0 min</span>
+                        </div>
+                        <button class="btn-confirm-order" onclick="navigateTo('loginUsuario')">
+                            Confirmar Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Seção Como Funciona -->
-    <section class="how-it-works">
-      <div class="container">
-        <h2>Como Funciona</h2>
-        <div class="steps-grid">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Cadastre seu Pedido</h3>
-            <p>Informe origem, destino e detalhes da entrega</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Encontramos um Motoboy</h3>
-            <p>Nossa plataforma conecta você ao melhor profissional</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>Acompanhe a Entrega</h3>
-            <p>Receba atualizações em tempo real do status</p>
-          </div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <h3>Entrega Concluída</h3>
-            <p>Confirme o recebimento e avalie o serviço</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">🌟 Por que DropPoint?</span>
+                    <h2 class="section-title">A revolução nas entregas chegou</h2>
+                    <p class="section-subtitle">
+                        Combinamos tecnologia de ponta com a experiência humana para 
+                        oferecer o melhor serviço de entregas do Brasil.
+                    </p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon-wrapper">
+                            <div class="feature-icon">🚀</div>
+                        </div>
+                        <h3>Entrega Ultra Rápida</h3>
+                        <p>Entregas em até 30 minutos para pedidos urgentes. Nossa rede otimizada garante velocidade sem comprometer a segurança.</p>
+                        <div class="feature-stats">
+                            <span class="stat">⚡ Até 30min</span>
+                            <span class="stat">📍 Rastreamento em tempo real</span>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon-wrapper">
+                            <div class="feature-icon">�</div>
+                        </div>
+                        <h3>Máxima Segurança</h3>
+                        <p>Todos os motoboys são verificados com background check completo. Seguro total contra danos e extravios.</p>
+                        <div class="feature-stats">
+                            <span class="stat">✅ Motoboys verificados</span>
+                            <span class="stat">🛡️ Seguro incluso</span>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon-wrapper">
+                            <div class="feature-icon">💰</div>
+                        </div>
+                        <h3>Preço Justo e Transparente</h3>
+                        <p>Sem taxas ocultas. Preços competitivos com a melhor relação custo-benefício do mercado.</p>
+                        <div class="feature-stats">
+                            <span class="stat">💵 Sem taxas ocultas</span>
+                            <span class="stat">🏆 Melhor custo-benefício</span>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-icon-wrapper">
+                            <div class="feature-icon">�</div>
+                        </div>
+                        <h3>Tecnologia Inteligente</h3>
+                        <p>Algoritmo inteligente encontra o motoboy mais próximo e calcula a melhor rota automaticamente.</p>
+                        <div class="feature-stats">
+                            <span class="stat">🤖 IA otimizada</span>
+                            <span class="stat">🗺️ Melhor rota</span>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="feature-icon-wrapper">
+                            <div class="feature-icon">⭐</div>
+                        </div>
+                        <h3>Avaliação em Tempo Real</h3>
+                        <p>Sistema de avaliação bidirecional garante qualidade constante e feedback imediato.</p>
+                        <div class="feature-stats">
+                            <span class="stat">⭐ Avaliação 4.9/5</span>
+                            <span class="stat">💬 Feedback imediato</span>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="feature-icon-wrapper">
+                            <div class="feature-icon">🌍</div>
+                        </div>
+                        <h3>Cobertura Ampla</h3>
+                        <p>Atendemos toda a região metropolitana com cobertura 24/7 para suas necessidades.</p>
+                        <div class="feature-stats">
+                            <span class="stat">🌃 24/7 disponível</span>
+                            <span class="stat">📍 Cobertura total</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-cta">
+                    <button class="btn-about-cta" onclick="navigateTo('loginUsuario')">
+                        Experimentar Agora Grátis
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-    <!-- Call to Action -->
-    <section class="cta-section">
-      <div class="container">
-        <h2>Pronto para começar?</h2>
-        <p>Faça sua primeira entrega agora mesmo</p>
-        <div class="cta-buttons">
-          <a href="./front_end/public/loginUsuario.html" class="btn-primary">Fazer Pedido</a>
-          <a href="./front_end/public/loginMotoboy.html" class="btn-secondary">Ser Motoboy</a>
-        </div>
-      </div>
-    </section>
-  </main>
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">📋 Processo Simples</span>
+                    <h2 class="section-title">Como Funciona o DropPoint</h2>
+                    <p class="section-subtitle">
+                        Em apenas 4 passos simples, sua entrega estará a caminho. 
+                        Processo otimizado para máxima conveniência.
+                    </p>
+                </div>
+                
+                <div class="steps-container">
+                    <div class="steps-line"></div>
+                    
+                    <div class="step" data-aos="fade-right" data-aos-delay="100">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-icon">📱</div>
+                            <h3>Cadastre seu Pedido</h3>
+                            <p>Informe endereços de origem e destino, tipo de produto e urgência. Nossa calculadora mostra o preço em tempo real.</p>
+                            <div class="step-features">
+                                <span class="step-feature">✓ Cálculo automático</span>
+                                <span class="step-feature">✓ Preço transparente</span>
+                                <span class="step-feature">✓ Múltiplas opções</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" data-aos="fade-left" data-aos-delay="200">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-icon">🔍</div>
+                            <h3>Encontramos o Melhor Motoboy</h3>
+                            <p>Nossa IA conecta você automaticamente ao motoboy mais próximo e qualificado para sua entrega.</p>
+                            <div class="step-features">
+                                <span class="step-feature">🤖 Algoritmo inteligente</span>
+                                <span class="step-feature">⚡ Conexão instantânea</span>
+                                <span class="step-feature">⭐ Alta avaliação</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" data-aos="fade-right" data-aos-delay="300">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-icon">📍</div>
+                            <h3>Acompanhe em Tempo Real</h3>
+                            <p>Receba atualizações constantes via push, SMS e email. Veja a localização exata do motoboy no mapa.</p>
+                            <div class="step-features">
+                                <span class="step-feature">🗺️ Mapa em tempo real</span>
+                                <span class="step-feature">📢 Notificações automáticas</span>
+                                <span class="step-feature">💬 Chat direto</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" data-aos="fade-left" data-aos-delay="400">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-icon">✅</div>
+                            <h3>Entrega Concluída</h3>
+                            <p>Confirme o recebimento, avalie o serviço e ajude a manter a qualidade. Pagamento automático e seguro.</p>
+                            <div class="step-features">
+                                <span class="step-feature">📸 Comprovante fotográfico</span>
+                                <span class="step-feature">⭐ Sistema de avaliação</span>
+                                <span class="step-feature">💳 Pagamento seguro</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="how-it-works-cta">
+                    <div class="cta-content">
+                        <h3>Pronto para começar?</h3>
+                        <p>Junte-se a milhares de pessoas que já confiam no DropPoint</p>
+                        <button class="btn-start-now" onclick="navigateTo('loginUsuario')">
+                            <span class="btn-icon">🚀</span>
+                            Começar Agora
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>DropPoint</h3>
-          <p>Conectando pessoas através de entregas rápidas e seguras.</p>
-        </div>
-        <div class="footer-section">
-          <h4>Contato</h4>
-          <p>📞 (11) 99999-9999</p>
-          <p>📧 contato@droppoint.com</p>
-        </div>
-        <div class="footer-section">
-          <h4>Ajuda</h4>
-          <a href="#help">Central de Ajuda</a>
-          <a href="#terms">Termos de Uso</a>
-          <a href="#privacy">Política de Privacidade</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 DropPoint. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">💰 Preços Transparentes</span>
+                    <h2 class="section-title">Planos que Cabem no Seu Bolso</h2>
+                    <p class="section-subtitle">
+                        Sem taxas ocultas, sem surpresas. Escolha o plano ideal para suas necessidades.
+                    </p>
+                </div>
+                
+                <div class="pricing-cards">
+                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="pricing-header">
+                            <div class="pricing-icon">🚀</div>
+                            <h3>Normal</h3>
+                            <p>Para entregas do dia a dia</p>
+                        </div>
+                        <div class="pricing-body">
+                            <div class="pricing-price">
+                                <span class="price">R$ 8,90</span>
+                                <span class="period">taxa base</span>
+                            </div>
+                            <ul class="pricing-features">
+                                <li>✅ Entrega em até 2 horas</li>
+                                <li>✅ Rastreamento em tempo real</li>
+                                <li>✅ Seguro incluso (até R$ 100)</li>
+                                <li>✅ Suporte via chat</li>
+                                <li>✅ + R$ 2,50/km rodado</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-footer">
+                            <button class="btn-pricing" onclick="navigateTo('loginUsuario')">Escolher Plano</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+                        <div class="pricing-badge">🔥 Mais Popular</div>
+                        <div class="pricing-header">
+                            <div class="pricing-icon">⚡</div>
+                            <h3>Expressa</h3>
+                            <p>Para quando você tem pressa</p>
+                        </div>
+                        <div class="pricing-body">
+                            <div class="pricing-price">
+                                <span class="price">R$ 13,90</span>
+                                <span class="period">taxa base</span>
+                            </div>
+                            <ul class="pricing-features">
+                                <li>✅ Entrega em até 1 hora</li>
+                                <li>✅ Prioridade na fila</li>
+                                <li>✅ Rastreamento premium</li>
+                                <li>✅ Seguro incluso (até R$ 300)</li>
+                                <li>✅ Suporte prioritário</li>
+                                <li>✅ + R$ 3,50/km rodado</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-footer">
+                            <button class="btn-pricing primary" onclick="navigateTo('loginUsuario')">Escolher Plano</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="pricing-header">
+                            <div class="pricing-icon">🏆</div>
+                            <h3>Ultra Rápida</h3>
+                            <p>Para emergências</p>
+                        </div>
+                        <div class="pricing-body">
+                            <div class="pricing-price">
+                                <span class="price">R$ 24,90</span>
+                                <span class="period">taxa base</span>
+                            </div>
+                            <ul class="pricing-features">
+                                <li>✅ Entrega em até 30 minutos</li>
+                                <li>✅ Motoboy dedicado</li>
+                                <li>✅ Prioridade máxima</li>
+                                <li>✅ Seguro premium (até R$ 500)</li>
+                                <li>✅ Suporte 24/7</li>
+                                <li>✅ + R$ 4,50/km rodado</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-footer">
+                            <button class="btn-pricing" onclick="navigateTo('loginUsuario')">Escolher Plano</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pricing-info">
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <span class="info-icon">💳</span>
+                            <h4>Pagamento Seguro</h4>
+                            <p>Pix, cartão ou dinheiro. Você escolhe como pagar.</p>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-icon">🎁</span>
+                            <h4>Primeira Entrega Grátis</h4>
+                            <p>Novos usuários ganham desconto na primeira entrega.</p>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-icon">📞</span>
+                            <h4>Suporte Especializado</h4>
+                            <p>Nossa equipe está sempre pronta para ajudar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <script>
-    function toggleMenu() {
-      document.getElementById('menu-buttons').classList.toggle('show');
-    }
-  </script>
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">⭐ Depoimentos</span>
+                    <h2 class="section-title">O que nossos clientes dizem</h2>
+                    <p class="section-subtitle">
+                        Mais de 10.000 entregas realizadas com excelência e satisfação.
+                    </p>
+                </div>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-header">
+                            <div class="user-info">
+                                <div class="user-avatar">👩‍💼</div>
+                                <div class="user-details">
+                                    <h4>Maria Silva</h4>
+                                    <span>Empresária</span>
+                                </div>
+                            </div>
+                            <div class="rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <p class="testimonial-text">
+                            "O DropPoint revolucionou minha empresa! Entregas rápidas e confiáveis. 
+                            O motoboy chegou em 25 minutos e foi super educado. Recomendo!"
+                        </p>
+                        <div class="testimonial-footer">
+                            <span class="delivery-info">Entrega Ultra Rápida • 25 min</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-header">
+                            <div class="user-info">
+                                <div class="user-avatar">👨‍💻</div>
+                                <div class="user-details">
+                                    <h4>João Santos</h4>
+                                    <span>Desenvolvedor</span>
+                                </div>
+                            </div>
+                            <div class="rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <p class="testimonial-text">
+                            "App muito bem feito! Consegui acompanhar toda a entrega pelo mapa. 
+                            Preço justo e transparente. Já virei cliente fiel!"
+                        </p>
+                        <div class="testimonial-footer">
+                            <span class="delivery-info">Entrega Normal • 1h 15min</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-header">
+                            <div class="user-info">
+                                <div class="user-avatar">👩‍🎓</div>
+                                <div class="user-details">
+                                    <h4>Ana Costa</h4>
+                                    <span>Estudante</span>
+                                </div>
+                            </div>
+                            <div class="rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <p class="testimonial-text">
+                            "Precisava urgente de um documento e o DropPoint me salvou! 
+                            Entrega em 45 minutos e preço que cabe no bolso de estudante."
+                        </p>
+                        <div class="testimonial-footer">
+                            <span class="delivery-info">Entrega Expressa • 45 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonials-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">Avaliação média</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfação</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10k+</span>
+                        <span class="stat-label">Entregas realizadas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-  <script src="./front_end/script/script.js"></script>
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <h2>Pronto para Experimentar?</h2>
+                        <p>
+                            Junte-se a milhares de pessoas que já confiam no DropPoint para suas entregas. 
+                            Primeira entrega com desconto especial para novos usuários!
+                        </p>
+                        <div class="cta-benefits">
+                            <div class="benefit">
+                                <span class="benefit-icon">🎁</span>
+                                <span>50% OFF na primeira entrega</span>
+                            </div>
+                            <div class="benefit">
+                                <span class="benefit-icon">⚡</span>
+                                <span>Cadastro em menos de 2 minutos</span>
+                            </div>
+                            <div class="benefit">
+                                <span class="benefit-icon">🔒</span>
+                                <span>100% seguro e confiável</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-actions">
+                        <button class="btn-cta-primary" onclick="navigateTo('loginUsuario')">
+                            <span class="btn-icon">👤</span>
+                            Fazer Meu Primeiro Pedido
+                        </button>
+                        <button class="btn-cta-secondary" onclick="navigateTo('loginMotoboy')">
+                            <span class="btn-icon">🏍️</span>
+                            Quero Ser Motoboy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="modern-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section brand-section">
+                    <div class="footer-brand">
+                        <img src="./front_end/img/Logo.png" alt="DropPoint Logo" class="footer-logo">
+                        <h3>DropPoint</h3>
+                    </div>
+                    <p class="footer-description">
+                        Conectando pessoas através de entregas rápidas, seguras e com o melhor preço do mercado. 
+                        A revolução das entregas chegou ao Brasil.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+                        <a href="#" class="social-link" aria-label="YouTube">📺</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Serviços</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="navigateTo('loginUsuario')">Fazer Pedido</a></li>
+                        <li><a href="#" onclick="navigateTo('loginMotoboy')">Ser Motoboy</a></li>
+                        <li><a href="#pricing">Preços</a></li>
+                        <li><a href="#about">Sobre Nós</a></li>
+                        <li><a href="#how-it-works">Como Funciona</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#help">Central de Ajuda</a></li>
+                        <li><a href="#faq">Perguntas Frequentes</a></li>
+                        <li><a href="#contact">Fale Conosco</a></li>
+                        <li><a href="#status">Status do Sistema</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#terms">Termos de Uso</a></li>
+                        <li><a href="#privacy">Política de Privacidade</a></li>
+                        <li><a href="#cookies">Política de Cookies</a></li>
+                        <li><a href="#security">Segurança</a></li>
+                        <li><a href="#accessibility">Acessibilidade</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section contact-section">
+                    <h4>Contato</h4>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <div class="contact-details">
+                                <span class="contact-label">Telefone</span>
+                                <a href="tel:+5511999999999">(11) 99999-9999</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <a href="mailto:contato@droppoint.com">contato@droppoint.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🆘</span>
+                            <div class="contact-details">
+                                <span class="contact-label">Emergência</span>
+                                <a href="tel:+55119999999">(11) 9999-9999</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="app-download">
+                        <span class="download-label">Baixe nosso app:</span>
+                        <div class="download-buttons">
+                            <a href="#" class="download-btn">📱 App Store</a>
+                            <a href="#" class="download-btn">🤖 Google Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        &copy; 2025 DropPoint. Todos os direitos reservados. 
+                        CNPJ: 00.000.000/0001-00 • Licença Municipal: 123456
+                    </p>
+                    <div class="footer-badges">
+                        <span class="badge">🔒 SSL Seguro</span>
+                        <span class="badge">✅ PCI Compliant</span>
+                        <span class="badge">🛡️ ISO 27001</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Voltar ao topo">
+        ↑
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="./front_end/script/navigation.js"></script>
+    <script src="./front_end/script/utils.js"></script>
+    <script src="./front_end/script/script.js"></script>
+    <script src="./front_end/script/responsive-test.js"></script>
+    
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            mobileMenu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            mobileMenu.classList.remove('active');
+            toggle.classList.remove('active');
+        }
+
+        // Smooth scroll functions
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Back to top button visibility
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Animated counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-target]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    counter.textContent = Math.floor(current);
+                    
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    }
+                }, 20);
+            });
+        }
+
+        // Trigger counter animation when hero section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        const heroSection = document.querySelector('.hero-section');
+        if (heroSection) {
+            observer.observe(heroSection);
+        }
+
+        // Quick order form handler
+        document.getElementById('quickOrderForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const pickup = document.getElementById('pickup').value;
+            const delivery = document.getElementById('delivery').value;
+            const urgency = document.getElementById('urgency').value;
+            
+            if (pickup && delivery && urgency) {
+                // Simulate price calculation
+                const distance = Math.floor(Math.random() * 20) + 5; // 5-25 km
+                let basePrice = 8.90;
+                let pricePerKm = 2.50;
+                
+                if (urgency === 'express') {
+                    basePrice = 13.90;
+                    pricePerKm = 3.50;
+                } else if (urgency === 'ultra') {
+                    basePrice = 24.90;
+                    pricePerKm = 4.50;
+                }
+                
+                const totalPrice = basePrice + (distance * pricePerKm);
+                const estimatedTime = urgency === 'ultra' ? 30 : urgency === 'express' ? 60 : 120;
+                
+                // Show result
+                document.getElementById('priceValue').textContent = `R$ ${totalPrice.toFixed(2)}`;
+                document.getElementById('distanceInfo').textContent = `Distância: ${distance} km`;
+                document.getElementById('timeInfo').textContent = `Tempo: ${estimatedTime} min`;
+                document.getElementById('priceResult').style.display = 'block';
+                
+                // Scroll to result
+                document.getElementById('priceResult').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.modern-header');
+            if (window.pageYOffset > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Active nav link highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        function highlightActiveSection() {
+            const scrollPos = window.pageYOffset + 200;
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const bottom = top + section.offsetHeight;
+                const id = section.getAttribute('id');
+                
+                if (scrollPos >= top && scrollPos <= bottom) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightActiveSection);
+
+        // Click handlers for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+                closeMobileMenu();
+            });
+        });
+    </script>
 </body>
 
 </html>

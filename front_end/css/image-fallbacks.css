@@ -1,0 +1,25 @@
+/* Fallback styles for missing images */
+.hero-video {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+/* Create placeholder for missing images */
+.logo[src$="Logo.png"]:not([src*="data:"]) {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.logo[src$="Logo.png"]:not([src*="data:"]):after {
+    content: "DP";
+}
+
+/* Hide broken image icon */
+img[src$="Logo.png"]:not([src*="data:"]) {
+    color: transparent;
+}

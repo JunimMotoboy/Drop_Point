@@ -12,7 +12,7 @@
 <body class="cadastro">
     
     <div class="back-button">
-        <button onclick="window.location.href='loginUsuario.html'" class="btn-back" aria-label="Voltar para login">
+        <button onclick="navigateTo('loginUsuario')" class="btn-back" aria-label="Voltar para login">
             <img src="../img/seta-esquerda.png" alt="Voltar">
         </button>
     </div>
@@ -120,10 +120,12 @@
             </button>
 
             <div class="login-link">
-                <p>Já tem uma conta? <a href="loginUsuario.html" class="link-login">Fazer login</a></p>
+                <p>Já tem uma conta? <a href="#" onclick="navigateTo('loginUsuario')" class="link-login">Fazer login</a></p>
             </div>
         </form>
     </div>
 
+    <script src="../script/navigation.js"></script>
+    <script src="../script/utils.js"></script>
 </body>
 </html>

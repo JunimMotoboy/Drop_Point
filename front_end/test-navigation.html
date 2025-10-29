@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DropPoint - Teste de Navegação</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        
+        .test-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .test-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .test-link:hover {
+            background: #e3f2fd;
+            border-color: #007bff;
+            text-decoration: none;
+        }
+        
+        .test-link .icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        
+        .test-link .arrow {
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        .status-panel {
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .status-ok {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .status-error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .test-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 0 10px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .test-results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 DropPoint - Teste de Navegação</h1>
+        
+        <div class="status-panel">
+            <h3>📊 Status do Sistema</h3>
+            <div class="status-item">
+                <span>Sistema de Navegação:</span>
+                <span id="navStatus" class="status-error">Carregando...</span>
+            </div>
+            <div class="status-item">
+                <span>Backend API:</span>
+                <span id="apiStatus" class="status-error">Carregando...</span>
+            </div>
+            <div class="status-item">
+                <span>Autenticação:</span>
+                <span id="authStatus" class="status-error">Carregando...</span>
+            </div>
+            <div class="status-item">
+                <span>Usuário Logado:</span>
+                <span id="userStatus" class="status-error">Nenhum</span>
+            </div>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-section">
+                <h3>🏠 Página Principal</h3>
+                <div class="test-links">
+                    <a href="javascript:void(0)" onclick="navigateTo('home')" class="test-link">
+                        <span><span class="icon">🏠</span>Página Inicial</span>
+                        <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>🔐 Autenticação</h3>
+                <div class="test-links">
+                    <a href="javascript:void(0)" onclick="navigateTo('loginUsuario')" class="test-link">
+                        <span><span class="icon">👤</span>Login Usuário</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('loginMotoboy')" class="test-link">
+                        <span><span class="icon">🏍️</span>Login Motoboy</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('cadastroUsuario')" class="test-link">
+                        <span><span class="icon">📝</span>Cadastro Usuário</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('cadastroMotoboy')" class="test-link">
+                        <span><span class="icon">🏍️</span>Cadastro Motoboy</span>
+                        <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>📊 Dashboards</h3>
+                <div class="test-links">
+                    <a href="javascript:void(0)" onclick="navigateTo('dashboardUsuario')" class="test-link">
+                        <span><span class="icon">👤</span>Dashboard Usuário</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('dashboardMotoboy')" class="test-link">
+                        <span><span class="icon">🏍️</span>Dashboard Motoboy</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('dashboardEntregamovel')" class="test-link">
+                        <span><span class="icon">🚚</span>Entrega Móvel</span>
+                        <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>📦 Funcionalidades</h3>
+                <div class="test-links">
+                    <a href="javascript:void(0)" onclick="navigateTo('cadastrarPedido')" class="test-link">
+                        <span><span class="icon">📦</span>Cadastrar Pedido</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('acompanharPedidos')" class="test-link">
+                        <span><span class="icon">📍</span>Acompanhar Pedidos</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('historicoDePedidos')" class="test-link">
+                        <span><span class="icon">📋</span>Histórico de Pedidos</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('avaliacoes')" class="test-link">
+                        <span><span class="icon">⭐</span>Avaliações</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="navigateTo('perfil')" class="test-link">
+                        <span><span class="icon">👤</span>Perfil</span>
+                        <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-actions">
+            <button class="btn" onclick="testAllLinks()">🧪 Testar Todas as Rotas</button>
+            <button class="btn btn-secondary" onclick="testAPI()">🔗 Testar API</button>
+            <button class="btn btn-secondary" onclick="clearStorage()">🗑️ Limpar Dados</button>
+        </div>
+
+        <div id="testResults" class="test-results">
+            <h4>📋 Resultados dos Testes</h4>
+            <div id="resultsContent"></div>
+        </div>
+    </div>
+
+    <script src="../script/navigation.js"></script>
+    <script src="../script/utils.js"></script>
+    
+    <script>
+        // Atualizar status da página
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSystemStatus();
+            
+            // Atualizar status a cada 5 segundos
+            setInterval(updateSystemStatus, 5000);
+        });
+
+        async function updateSystemStatus() {
+            // Status do sistema de navegação
+            const navStatus = document.getElementById('navStatus');
+            if (window.DropPointNav) {
+                navStatus.textContent = '✅ Funcionando';
+                navStatus.className = 'status-ok';
+            } else {
+                navStatus.textContent = '❌ Não carregado';
+                navStatus.className = 'status-error';
+            }
+
+            // Status da API
+            const apiStatus = document.getElementById('apiStatus');
+            try {
+                const response = await fetch('http://localhost:3000/api/health');
+                const data = await response.json();
+                if (data.status === 'OK') {
+                    apiStatus.textContent = '✅ Online';
+                    apiStatus.className = 'status-ok';
+                } else {
+                    throw new Error('API indisponível');
+                }
+            } catch (error) {
+                apiStatus.textContent = '❌ Offline';
+                apiStatus.className = 'status-error';
+            }
+
+            // Status de autenticação
+            const authStatus = document.getElementById('authStatus');
+            const userStatus = document.getElementById('userStatus');
+            
+            const user = JSON.parse(localStorage.getItem('droppoint_user') || 'null');
+            if (user) {
+                authStatus.textContent = '✅ Autenticado';
+                authStatus.className = 'status-ok';
+                userStatus.textContent = `${user.nome} (${user.type})`;
+                userStatus.className = 'status-ok';
+            } else {
+                authStatus.textContent = '❌ Não autenticado';
+                authStatus.className = 'status-error';
+                userStatus.textContent = 'Nenhum';
+                userStatus.className = 'status-error';
+            }
+        }
+
+        async function testAllLinks() {
+            const results = document.getElementById('testResults');
+            const content = document.getElementById('resultsContent');
+            
+            results.style.display = 'block';
+            content.innerHTML = '<p>🔄 Testando rotas...</p>';
+
+            const routes = [
+                'home', 'loginUsuario', 'loginMotoboy', 'cadastroUsuario', 'cadastroMotoboy',
+                'dashboardUsuario', 'dashboardMotoboy', 'dashboardEntregamovel',
+                'cadastrarPedido', 'acompanharPedidos', 'historicoDePedidos', 'avaliacoes', 'perfil'
+            ];
+
+            let testResults = [];
+
+            for (const route of routes) {
+                try {
+                    if (window.DropPointNav && window.DropPointNav.routes[route]) {
+                        const url = window.DropPointNav.routes[route];
+                        const response = await fetch(url, { method: 'HEAD' });
+                        
+                        if (response.ok || response.status === 405) {
+                            testResults.push(`✅ ${route}: OK`);
+                        } else {
+                            testResults.push(`❌ ${route}: Erro ${response.status}`);
+                        }
+                    } else {
+                        testResults.push(`❌ ${route}: Rota não encontrada`);
+                    }
+                } catch (error) {
+                    testResults.push(`❌ ${route}: ${error.message}`);
+                }
+            }
+
+            content.innerHTML = `
+                <h5>Resultados:</h5>
+                <ul>
+                    ${testResults.map(result => `<li>${result}</li>`).join('')}
+                </ul>
+            `;
+        }
+
+        async function testAPI() {
+            const results = document.getElementById('testResults');
+            const content = document.getElementById('resultsContent');
+            
+            results.style.display = 'block';
+            content.innerHTML = '<p>🔄 Testando API...</p>';
+
+            const endpoints = [
+                '/health',
+                '/auth/login/usuario',
+                '/usuarios/profile',
+                '/motoboys/available',
+                '/pedidos'
+            ];
+
+            let apiResults = [];
+
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api${endpoint}`, {
+                        method: endpoint.includes('login') ? 'POST' : 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: endpoint.includes('login') ? JSON.stringify({ email: 'test', senha: 'test' }) : undefined
+                    });
+                    
+                    if (response.ok || response.status === 401 || response.status === 400) {
+                        apiResults.push(`✅ ${endpoint}: Acessível`);
+                    } else {
+                        apiResults.push(`⚠️ ${endpoint}: Status ${response.status}`);
+                    }
+                } catch (error) {
+                    apiResults.push(`❌ ${endpoint}: ${error.message}`);
+                }
+            }
+
+            content.innerHTML = `
+                <h5>Resultados da API:</h5>
+                <ul>
+                    ${apiResults.map(result => `<li>${result}</li>`).join('')}
+                </ul>
+            `;
+        }
+
+        function clearStorage() {
+            if (confirm('Tem certeza que deseja limpar todos os dados armazenados?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                alert('Dados limpos com sucesso!');
+                updateSystemStatus();
+            }
+        }
+    </script>
+</body>
+</html>

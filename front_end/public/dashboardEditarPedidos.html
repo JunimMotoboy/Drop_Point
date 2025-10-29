@@ -1,57 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>-Editar Pedidos</title>
+    <title>DropPoint - Editar Pedidos</title>
     <link rel="stylesheet" href="../css/dashboardEditarPedidos.css">
 </head>
-
 <body>
     <header>
-<<<<<<< HEAD
-        <h1 class="setaRetorno" alt="Voltar"><</h1>
-        <img class="userImg" src="https://thvnext.bing.com/th/id/OIP.XqMKKdpATDQPQE2e1_r9_gHaHa?o=7&cb=12rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Imagem de usuario">
-=======
-        <h1 class="setaRetorno" alt="Voltar"></h1>
-        <img class="userImg" src="#" alt="Imagem de usuario">
->>>>>>> 28e21e1198dad8b8aa96e090bcdc29ff8e9d7f25
+        <button class="setaRetorno" onclick="goBack()" alt="Voltar">←</button>
+        <h1>Editar Pedidos</h1>
+        <img class="userImg" src="../img/user-placeholder.png" alt="Imagem de usuário">
     </header>
+    
     <main>
-
-<<<<<<< HEAD
-<ul>
-    <li>
-        <h2>Endereço <button>Editar</button></h2>
-        <br>
-    </li>
-    <li><h2>Telefone</h2> <button>Editar</button></li>
-    <br>
-    <li>
-        <h3>Entrega Movel</h3><label for="">Não</label> <input type="radio" >
-        <label for="">Sim</label>
-        <input type="radio">
-        <br>
-    </li>
-</ul>
-=======
-        <ul>
-            <li>
-                <h2>Endereço <button>Editar</button></h2>
-            </li>
-            <li>
-                <h2>Telefone</h2> <button>Editar</button>
-            </li>
-            <li>
-                <h3>Entrega Movel</h3> <input type="checkbox" name="Entrega Movel">
-            </li>
-        </ul>
->>>>>>> 28e21e1198dad8b8aa96e090bcdc29ff8e9d7f25
-
-
+        <div class="edit-form">
+            <div class="form-section">
+                <h2>Endereço</h2>
+                <input type="text" id="endereco" placeholder="Digite o endereço">
+                <button class="btn-edit">Editar</button>
+            </div>
+            
+            <div class="form-section">
+                <h2>Telefone</h2>
+                <input type="tel" id="telefone" placeholder="Digite o telefone">
+                <button class="btn-edit">Editar</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Entrega Móvel</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="entregaMovel" id="entregaMovel">
+                    <span class="checkmark"></span>
+                    Ativar entrega móvel
+                </label>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn-cancel" onclick="goBack()">Cancelar</button>
+                <button class="btn-save" onclick="saveChanges()">Salvar Alterações</button>
+            </div>
+        </div>
     </main>
 
+    <script src="../script/navigation.js"></script>
+    <script src="../script/utils.js"></script>
 </body>
-
 </html>

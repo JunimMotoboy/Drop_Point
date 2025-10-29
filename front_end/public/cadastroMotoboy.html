@@ -12,7 +12,7 @@
 <body class="cadastro">
     
     <div class="back-button">
-        <button onclick="window.location.href='loginMotoboy.html'" class="btn-back" aria-label="Voltar para login">
+        <button onclick="navigateTo('loginMotoboy')" class="btn-back" aria-label="Voltar para login">
             <img src="../img/seta-esquerda.png" alt="Voltar">
         </button>
     </div>
@@ -239,7 +239,7 @@
             </button>
 
             <div class="login-link">
-                <p>Já tem uma conta? <a href="loginMotoboy.html" class="link-login">Fazer login</a></p>
+                <p>Já tem uma conta? <a href="#" onclick="navigateTo('loginMotoboy')" class="link-login">Fazer login</a></p>
             </div>
         </form>
 
@@ -262,6 +262,8 @@
         </div>
     </div>
 
+    <script src="../script/navigation.js"></script>
+    <script src="../script/utils.js"></script>
     <script>
         // Função para alternar visibilidade da senha
         function togglePassword(fieldId) {
@@ -328,7 +330,7 @@
             
             setTimeout(() => {
                 alert('Cadastro enviado com sucesso! Você receberá um e-mail com as próximas etapas.');
-                window.location.href = 'loginMotoboy.html';
+                navigateTo('loginMotoboy');
             }, 2000);
         });
     </script>
